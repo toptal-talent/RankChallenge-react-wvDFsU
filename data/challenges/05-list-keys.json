@@ -1,0 +1,58 @@
+{
+  "id": "05-list-keys",
+  "level": 5,
+  "title": "Render the List",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 250,
+  "description": "The `tasks` array holds four items, but the component renders a single hardcoded `<li>todo</li>`.\n\nRender the array into list items with `.map()`, and give each item a `key` prop so React can track them.",
+  "objectives": [
+    "Use `tasks.map(...)` to render one `<li>` per task",
+    "Give each rendered `<li>` a `key` prop"
+  ],
+  "hints": [
+    "Inside JSX you can render an array of elements: `{tasks.map((task, i) => <li key={i}>{task}</li>)}`.",
+    "React uses `key` to identify which items changed. The index works here, though a stable id is better in real apps."
+  ],
+  "hintPenalty": 25,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "TaskList.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function TaskList() {\n  const tasks = ['Fix the colors', 'Pass the props', 'Wire up state', 'Render the list'];\n\n  return (\n    <div style={{ padding: '40px', fontFamily: 'sans-serif', color: '#e0e0e0', background: '#16213e', borderRadius: '8px', maxWidth: '420px', margin: '40px auto' }}>\n      <h2 style={{ marginTop: 0 }}>Tasks</h2>\n      {/* BUG: the list is hardcoded instead of rendered from the tasks array */}\n      <ul>\n        <li>todo</li>\n      </ul>\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "TaskList.jsx",
+    "checks": [
+      {
+        "description": "Renders the array with .map()",
+        "astRule": {
+          "type": "contains-string",
+          "value": ".map("
+        },
+        "failMessage": "Render the list with `tasks.map(...)`.",
+        "points": 130
+      },
+      {
+        "description": "Each item has a key prop",
+        "astRule": {
+          "type": "contains-string",
+          "value": "key="
+        },
+        "failMessage": "Add a `key` prop to each rendered `<li>`.",
+        "points": 120
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "04-controlled-form"
+  ]
+}

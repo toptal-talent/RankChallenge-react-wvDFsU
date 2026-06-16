@@ -1,0 +1,57 @@
+{
+  "id": "07-conditional-render",
+  "level": 7,
+  "title": "Show and Hide",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 300,
+  "description": "The toggle button flips the `open` state, but the details panel is always visible — it ignores `open` entirely.\n\nRender the panel conditionally so it only appears when `open` is true. Use the `&&` short-circuit pattern: `{open && (<p>…</p>)}`.",
+  "objectives": [
+    "Show the panel only when open is true, using `{open && (...)}`",
+    "Keep the `data-testid=\"panel\"` element for grading"
+  ],
+  "hints": [
+    "In JSX, `{condition && <Element/>}` renders the element only when the condition is truthy.",
+    "The state and the toggle already work — you only need to gate the panel on `open`."
+  ],
+  "hintPenalty": 30,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "Accordion.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function Accordion() {\n  const [open, setOpen] = React.useState(false);\n\n  return (\n    <div style={{ padding: '40px', fontFamily: 'sans-serif', color: '#e0e0e0', background: '#16213e', borderRadius: '8px', maxWidth: '420px', margin: '40px auto' }}>\n      <button onClick={() => setOpen(!open)} style={{ padding: '8px 16px', background: '#e94560', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>\n        Toggle details\n      </button>\n      {/* BUG: the panel is always shown — it should appear only when open is true */}\n      <p data-testid=\"panel\" style={{ marginTop: '16px' }}>Hidden details revealed!</p>\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "Accordion.jsx",
+    "checks": [
+      {
+        "description": "Panel is rendered conditionally with open &&",
+        "astRule": {
+          "type": "contains-string",
+          "value": "open &&"
+        },
+        "failMessage": "Gate the panel with `{open && (...)}`.",
+        "points": 200
+      },
+      {
+        "description": "Keeps the panel element",
+        "astRule": {
+          "type": "contains-string",
+          "value": "data-testid=\"panel\""
+        },
+        "points": 100
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "06-useeffect-fetch"
+  ]
+}

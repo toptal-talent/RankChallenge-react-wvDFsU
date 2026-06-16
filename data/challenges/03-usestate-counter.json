@@ -1,0 +1,67 @@
+{
+  "id": "03-usestate-counter",
+  "level": 3,
+  "title": "Stateful Counter",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 200,
+  "description": "The counter refuses to count. Click `+` ten times and the display stays at 0 forever.\n\nThe developer used a plain variable instead of React state. React only re-renders when state changes — a plain `let` variable is invisible to it.\n\nFix the component so it uses `useState`:\n- Clicking `+` increments the count by 1\n- Clicking `-` decrements, but never below 0\n- The displayed count updates on every click",
+  "objectives": [
+    "Replace `let count = 0` with `const [count, setCount] = React.useState(0)`",
+    "Call `setCount(count + 1)` in the increment handler",
+    "Call `setCount(Math.max(0, count - 1))` in the decrement handler"
+  ],
+  "hints": [
+    "React only re-renders when state changes. Plain variables are invisible to React.",
+    "useState returns a pair: `[value, setter]`. Destructure it.",
+    "Never mutate state directly — always call the setter, e.g. `setCount(count + 1)`."
+  ],
+  "hintPenalty": 20,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "Counter.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function Counter() {\n  // BUG: plain variable, not state — React won't re-render when it changes\n  let count = 0;\n\n  const increment = () => { count = count + 1; };\n  const decrement = () => { count = count - 1; };\n\n  return (\n    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', padding: '40px', fontFamily: 'monospace' }}>\n      <h2 style={{ margin: 0, color: '#e0e0e0' }}>Counter</h2>\n      <span data-testid=\"count\" style={{ fontSize: '3rem', fontWeight: 'bold', color: '#e94560' }}>{count}</span>\n      <div style={{ display: 'flex', gap: '12px' }}>\n        <button onClick={decrement} style={{ padding: '8px 20px', fontSize: '1.2rem', background: '#16213e', color: '#e0e0e0', border: '1px solid #e94560', borderRadius: '4px', cursor: 'pointer' }}>-</button>\n        <button onClick={increment} style={{ padding: '8px 20px', fontSize: '1.2rem', background: '#e94560', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>+</button>\n      </div>\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "Counter.jsx",
+    "checks": [
+      {
+        "description": "Uses the useState hook",
+        "astRule": {
+          "type": "contains-string",
+          "value": "useState"
+        },
+        "failMessage": "Use `React.useState(0)` to hold the count.",
+        "points": 70
+      },
+      {
+        "description": "Updates count with setCount",
+        "astRule": {
+          "type": "contains-string",
+          "value": "setCount"
+        },
+        "points": 80
+      },
+      {
+        "description": "No plain `let count` variable remains",
+        "astRule": {
+          "type": "no-string",
+          "value": "let count"
+        },
+        "points": 50
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "02-props"
+  ]
+}

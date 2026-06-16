@@ -1,0 +1,58 @@
+{
+  "id": "04-controlled-form",
+  "level": 4,
+  "title": "Controlled Input",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 250,
+  "description": "A login form with two bugs:\n1. The input's `onChange` passes the whole event object to `setEmail` instead of the typed text. You need `e.target.value`.\n2. Submitting the form reloads the page because the default action is never prevented. Call `e.preventDefault()` in `handleSubmit`.\n\nFix both so typing updates the field and submitting shows \"Logged in as: …\".",
+  "objectives": [
+    "Change onChange to `(e) => setEmail(e.target.value)`",
+    "Call `e.preventDefault()` at the top of handleSubmit"
+  ],
+  "hints": [
+    "A controlled input reads its text from `e.target.value` inside the change handler.",
+    "Without `e.preventDefault()` the browser performs a full-page form submission and React state is lost."
+  ],
+  "hintPenalty": 25,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "LoginForm.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function LoginForm() {\n  const [email, setEmail] = React.useState('');\n  const [submitted, setSubmitted] = React.useState(false);\n\n  function handleSubmit(e) {\n    // BUG: the page reloads because the default form action is never prevented\n    setSubmitted(true);\n  }\n\n  return (\n    <div style={{ maxWidth: '400px', margin: '40px auto', padding: '32px', background: '#16213e', borderRadius: '8px', fontFamily: 'sans-serif' }}>\n      <h2 style={{ color: '#e0e0e0', marginTop: 0 }}>Login</h2>\n      <form onSubmit={handleSubmit}>\n        <input\n          type=\"email\"\n          value={email}\n          onChange={setEmail}\n          placeholder=\"Enter your email\"\n          style={{ width: '100%', padding: '10px', background: '#0f3460', border: '1px solid #533483', borderRadius: '4px', color: '#e0e0e0', boxSizing: 'border-box', marginBottom: '16px' }}\n        />\n        <button type=\"submit\" style={{ width: '100%', padding: '10px', background: '#e94560', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '1rem' }}>Sign In</button>\n      </form>\n      {submitted && (\n        <p data-testid=\"success\" style={{ color: '#4caf50', marginTop: '16px' }}>Logged in as: {email}</p>\n      )}\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "LoginForm.jsx",
+    "checks": [
+      {
+        "description": "onChange reads e.target.value",
+        "astRule": {
+          "type": "contains-string",
+          "value": "e.target.value"
+        },
+        "failMessage": "Use `(e) => setEmail(e.target.value)`.",
+        "points": 130
+      },
+      {
+        "description": "Submit prevents the default reload",
+        "astRule": {
+          "type": "contains-string",
+          "value": "preventDefault"
+        },
+        "failMessage": "Call `e.preventDefault()` in handleSubmit.",
+        "points": 120
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "03-usestate-counter"
+  ]
+}

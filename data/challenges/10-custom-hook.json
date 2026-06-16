@@ -1,0 +1,59 @@
+{
+  "id": "10-custom-hook",
+  "level": 10,
+  "title": "Custom Hook Finale",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 400,
+  "description": "The finale. This stopwatch works, but all of its logic lives inside the component. Your job is to extract it into a reusable custom hook.\n\nCreate a custom hook named `useSeconds` (a function whose name starts with `use`) that owns the state and the interval effect and returns the current seconds. Then call it from `Stopwatch`: `const seconds = useSeconds();`.",
+  "objectives": [
+    "Define `function useSeconds() { ... }` holding the state + effect, returning `seconds`",
+    "In Stopwatch, get the value via `const seconds = useSeconds();`"
+  ],
+  "hints": [
+    "A custom hook is just a function whose name starts with `use` that calls other hooks.",
+    "Move `useState` and the `useEffect` interval into `useSeconds`, and `return seconds` from it.",
+    "The component becomes tiny: `const seconds = useSeconds();` then render `{seconds}`."
+  ],
+  "hintPenalty": 40,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "Stopwatch.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function Stopwatch() {\n  // BUG: all the timer logic lives in the component.\n  // Extract it into a custom hook (a function whose name starts with use) and call it here.\n  const [seconds, setSeconds] = React.useState(0);\n\n  React.useEffect(() => {\n    const id = setInterval(() => setSeconds((s) => s + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n\n  return (\n    <div style={{ padding: '40px', fontFamily: 'sans-serif', color: '#e0e0e0', background: '#16213e', borderRadius: '8px', maxWidth: '420px', margin: '40px auto', textAlign: 'center' }}>\n      <h2 style={{ marginTop: 0 }}>Stopwatch</h2>\n      <span data-testid=\"seconds\" style={{ fontSize: '3rem', color: '#e94560', fontWeight: 'bold' }}>{seconds}</span>\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "Stopwatch.jsx",
+    "checks": [
+      {
+        "description": "Defines a custom hook named useSeconds",
+        "astRule": {
+          "type": "contains-string",
+          "value": "function useSeconds"
+        },
+        "failMessage": "Define `function useSeconds() { ... }`.",
+        "points": 200
+      },
+      {
+        "description": "Component calls useSeconds()",
+        "astRule": {
+          "type": "contains-string",
+          "value": "useSeconds()"
+        },
+        "failMessage": "Call `const seconds = useSeconds();` in the component.",
+        "points": 200
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "09-useref-focus"
+  ]
+}

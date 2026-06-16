@@ -1,0 +1,64 @@
+{
+  "id": "01-jsx-basics",
+  "level": 1,
+  "title": "Broken JSX",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 100,
+  "description": "Welcome to Rank Challenge. This component should greet the player by name, but it was written with plain-HTML habits and React is unhappy.\n\nTwo things are wrong:\n1. It uses the HTML attribute `class` — in JSX the attribute is `className`.\n2. It prints the literal word `name` instead of rendering the `name` variable. In JSX you read a JavaScript value with curly braces: `{name}`.\n\nFix both so the page reads \"Hello, Rank Challenger!\" inside a styled card.",
+  "objectives": [
+    "Rename the `class` attribute to `className`",
+    "Render the variable with curly braces: `{name}`"
+  ],
+  "hints": [
+    "JSX is not HTML. `class` is a reserved word in JavaScript, so React uses `className`.",
+    "Anything inside `{ }` in JSX is evaluated as JavaScript. `{name}` prints the value of the variable."
+  ],
+  "hintPenalty": 15,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "Welcome.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function Welcome() {\n  const name = 'Rank Challenger';\n\n  return (\n    <div class=\"card\" style={{ padding: '40px', fontFamily: 'sans-serif', color: '#e0e0e0', background: '#16213e', borderRadius: '8px', maxWidth: '420px', margin: '40px auto' }}>\n      <h1 style={{ color: '#e94560', marginTop: 0 }}>Hello, name!</h1>\n      <p>Welcome to your very first React fix.</p>\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "Welcome.jsx",
+    "checks": [
+      {
+        "description": "Uses className instead of class",
+        "astRule": {
+          "type": "no-string",
+          "value": "class=\""
+        },
+        "failMessage": "Use `className` instead of the HTML `class` attribute.",
+        "points": 35
+      },
+      {
+        "description": "className attribute is present",
+        "astRule": {
+          "type": "contains-string",
+          "value": "className"
+        },
+        "points": 30
+      },
+      {
+        "description": "Renders the name variable with { }",
+        "astRule": {
+          "type": "contains-string",
+          "value": "{name}"
+        },
+        "failMessage": "Render the variable with curly braces: `{name}`.",
+        "points": 35
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": []
+}

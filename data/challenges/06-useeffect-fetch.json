@@ -1,0 +1,58 @@
+{
+  "id": "06-useeffect-fetch",
+  "level": 6,
+  "title": "Fetch on Mount",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 300,
+  "description": "This component should load a list of users once, when it mounts. Instead it calls `fetch` directly in the render body — so it fires on every render, never awaits the response, and never stores the result.\n\nMove the data loading into a `useEffect` that runs once (empty dependency array), `await` the response, and store it with `setUsers`.",
+  "objectives": [
+    "Wrap the data loading in `React.useEffect(() => { ... }, [])`",
+    "await the fetch and the `.json()`, then call `setUsers(...)`"
+  ],
+  "hints": [
+    "Side effects (like fetching) belong in `useEffect`, not in the render body.",
+    "An empty dependency array `[]` makes the effect run once on mount.",
+    "fetch is async: `const res = await fetch(url); const data = await res.json();`. Define an async function inside the effect and call it."
+  ],
+  "hintPenalty": 30,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "Users.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function Users() {\n  const [users, setUsers] = React.useState([]);\n\n  // BUG: fetch runs on every render, the response is never awaited, and nothing is stored\n  fetch('https://jsonplaceholder.typicode.com/users');\n\n  return (\n    <div style={{ padding: '40px', fontFamily: 'sans-serif', color: '#e0e0e0', background: '#16213e', borderRadius: '8px', maxWidth: '420px', margin: '40px auto' }}>\n      <h2 style={{ marginTop: 0 }}>Users</h2>\n      <ul>\n        {users.map((u, i) => <li key={i}>{u.name}</li>)}\n      </ul>\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "Users.jsx",
+    "checks": [
+      {
+        "description": "Loads data inside useEffect",
+        "astRule": {
+          "type": "contains-string",
+          "value": "useEffect"
+        },
+        "failMessage": "Move the fetch into `React.useEffect(() => {...}, [])`.",
+        "points": 150
+      },
+      {
+        "description": "Awaits the fetch response",
+        "astRule": {
+          "type": "has-await"
+        },
+        "failMessage": "Use `await` on fetch and on `.json()`.",
+        "points": 150
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "05-list-keys"
+  ]
+}

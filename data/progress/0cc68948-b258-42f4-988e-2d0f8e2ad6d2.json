@@ -1,0 +1,41 @@
+{
+  "01-broken-colors": {
+    "solved": true,
+    "score": 100,
+    "hintsUsed": 0,
+    "timeSeconds": 100,
+    "solvedAt": 1779950837428
+  },
+  "02-flexbox-layout": {
+    "solved": true,
+    "skipped": false,
+    "score": 150,
+    "hintsUsed": 0,
+    "timeSeconds": 64,
+    "solvedAt": 1779964365799
+  },
+  "03-broken-state": {
+    "solved": true,
+    "skipped": false,
+    "score": 200,
+    "hintsUsed": 0,
+    "timeSeconds": 107,
+    "solvedAt": 1780311196225
+  },
+  "04-async-fetch": {
+    "solved": true,
+    "skipped": false,
+    "score": 200,
+    "hintsUsed": 0,
+    "timeSeconds": 102,
+    "solvedAt": 1780311309739
+  },
+  "05-event-handler": {
+    "solved": true,
+    "skipped": false,
+    "score": 250,
+    "hintsUsed": 0,
+    "timeSeconds": 132,
+    "solvedAt": 1780311446240
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "02-props",
+  "level": 2,
+  "title": "Pass the Props",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 150,
+  "description": "The `Greeting` component renders a `UserCard` and passes it `name` and `role` props — but the card ignores them and hardcodes \"Guest\" / \"visitor\" instead.\n\nMake `UserCard` actually display the props it receives. A function component reads its props from its first argument: `props.name`, `props.role`.",
+  "objectives": [
+    "Render `{props.name}` instead of the hardcoded \"Guest\"",
+    "Render `{props.role}` instead of the hardcoded \"visitor\""
+  ],
+  "hints": [
+    "Every function component receives one argument — the props object passed by its parent.",
+    "The parent already passes `<UserCard name=\"Ada Lovelace\" role=\"Admin\" />`. Read those with `props.name` and `props.role`."
+  ],
+  "hintPenalty": 20,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "Greeting.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function UserCard(props) {\n  // BUG: ignores the props it was given and hardcodes the values\n  return (\n    <div style={{ padding: '16px', background: '#0f3460', borderRadius: '6px', marginTop: '12px' }}>\n      <strong style={{ color: '#e94560' }}>Guest</strong>\n      <span style={{ color: '#9aa', marginLeft: '8px' }}>visitor</span>\n    </div>\n  );\n}\n\nfunction Greeting() {\n  return (\n    <div style={{ padding: '40px', fontFamily: 'sans-serif', color: '#e0e0e0', background: '#16213e', borderRadius: '8px', maxWidth: '420px', margin: '40px auto' }}>\n      <h2 style={{ marginTop: 0 }}>Team</h2>\n      <UserCard name=\"Ada Lovelace\" role=\"Admin\" />\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "Greeting.jsx",
+    "checks": [
+      {
+        "description": "UserCard renders props.name",
+        "astRule": {
+          "type": "contains-string",
+          "value": "props.name"
+        },
+        "failMessage": "Display the name with `{props.name}`.",
+        "points": 50
+      },
+      {
+        "description": "UserCard renders props.role",
+        "astRule": {
+          "type": "contains-string",
+          "value": "props.role"
+        },
+        "failMessage": "Display the role with `{props.role}`.",
+        "points": 50
+      },
+      {
+        "description": "Hardcoded \"Guest\" is removed",
+        "astRule": {
+          "type": "no-string",
+          "value": "Guest"
+        },
+        "points": 50
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "01-jsx-basics"
+  ]
+}

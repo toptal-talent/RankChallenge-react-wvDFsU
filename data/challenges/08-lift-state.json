@@ -1,0 +1,67 @@
+{
+  "id": "08-lift-state",
+  "level": 8,
+  "title": "Lift State Up",
+  "category": "react",
+  "categoryLabel": "React",
+  "points": 350,
+  "description": "`Temperature` computes Fahrenheit from a `celsius` value it holds in state — but the `CelsiusInput` keeps its OWN local state, so the parent never sees what the user types and the result stays at \"—\".\n\nLift the state up: make `CelsiusInput` a controlled component that reads `props.value` and calls `props.onChange`, and have the parent pass `value={celsius}` and an `onChange` that updates `celsius`.",
+  "objectives": [
+    "In CelsiusInput, use `props.value` and `props.onChange` instead of local state",
+    "In Temperature, render `<CelsiusInput value={celsius} onChange={(e) => setCelsius(e.target.value)} />`"
+  ],
+  "hints": [
+    "When two components need the same data, move that state to their closest common parent.",
+    "The child becomes \"controlled\": its value comes from props, and changes are reported up via a callback prop."
+  ],
+  "hintPenalty": 35,
+  "validationType": "react-render",
+  "files": [
+    {
+      "filename": "Temperature.jsx",
+      "language": "jsx",
+      "editable": true,
+      "content": "function CelsiusInput(props) {\n  // BUG: keeps its own local state, so the parent never sees the typed value\n  const [value, setValue] = React.useState('');\n  return (\n    <input\n      value={value}\n      onChange={(e) => setValue(e.target.value)}\n      placeholder=\"Celsius\"\n      style={{ padding: '8px', width: '100%', boxSizing: 'border-box' }}\n    />\n  );\n}\n\nfunction Temperature() {\n  const [celsius, setCelsius] = React.useState('');\n  const fahrenheit = celsius === '' ? '' : (Number(celsius) * 9) / 5 + 32;\n\n  return (\n    <div style={{ padding: '40px', fontFamily: 'sans-serif', color: '#e0e0e0', background: '#16213e', borderRadius: '8px', maxWidth: '420px', margin: '40px auto' }}>\n      <h2 style={{ marginTop: 0 }}>Converter</h2>\n      <CelsiusInput />\n      <p data-testid=\"result\" style={{ marginTop: '16px' }}>{fahrenheit === '' ? '—' : fahrenheit + ' °F'}</p>\n    </div>\n  );\n}"
+    }
+  ],
+  "validation": {
+    "iframeEntryFile": "Temperature.jsx",
+    "checks": [
+      {
+        "description": "Child reads props.value",
+        "astRule": {
+          "type": "contains-string",
+          "value": "props.value"
+        },
+        "failMessage": "Make CelsiusInput use `props.value`.",
+        "points": 120
+      },
+      {
+        "description": "Child calls props.onChange",
+        "astRule": {
+          "type": "contains-string",
+          "value": "props.onChange"
+        },
+        "failMessage": "Make CelsiusInput call `props.onChange`.",
+        "points": 120
+      },
+      {
+        "description": "Parent passes celsius down",
+        "astRule": {
+          "type": "contains-string",
+          "value": "value={celsius}"
+        },
+        "failMessage": "Pass `value={celsius}` to CelsiusInput.",
+        "points": 110
+      }
+    ]
+  },
+  "previewConfig": {
+    "type": "iframe",
+    "autoRefresh": true,
+    "refreshDebounceMs": 500
+  },
+  "unlockRequires": [
+    "07-conditional-render"
+  ]
+}
